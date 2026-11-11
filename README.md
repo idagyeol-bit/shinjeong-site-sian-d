@@ -4,10 +4,10 @@
 폰트와 사진도 폴더 안에 들어 있어 인터넷 연결 없이도 그대로 열립니다.
 외부 라이브러리(jQuery, GSAP 등)를 하나도 쓰지 않습니다.
 
-> **저장소 구성**
-> - `shinjeong-site-b` — **이 저장소.** 사실 검증·보강을 거친 2차 수정본. 배포 주소 https://idagyeol-bit.github.io/shinjeong-site-b/
-> - `-c` 저장소는 같은 내용의 사본이며 공개(GitHub Pages)되어 있지 않습니다.
-> 앞으로의 수정은 이 저장소(-b)에서 합니다.
+> **저장소 구성 — 시안 D (2026-11-11부터)**
+> - `shinjeong-site-sian-d` — **이 저장소.** 시안 C 58차(6df83a8)를 통째로 복사해 시작한 독립 판입니다. 배포 주소 https://idagyeol-bit.github.io/shinjeong-site-sian-d/
+> - 노트북 폴더 `…\신정개발-홈페이지-새디자인_1\시안D`, 갈래 `main`, 원격 `origin` 하나. 시안 C·B·원본과 폴더·git 기록·저장소를 공유하지 않습니다.
+> 앞으로 시안 D 수정은 이 폴더·저장소에서만 합니다.
 ---
 
 ## 1. 바로 열어 보기
@@ -29,21 +29,18 @@
 
 ## 2. 인터넷에 올리기 (GitHub Pages)
 
-> **기존 `shinjeong-site-a` 저장소에 덮어쓰는 경우**, 예전 파일 두 개
-> `js/app.js` 와 `js/data.js` 는 **지워 주세요.** 새 사이트에서는 쓰지 않습니다.
-> (남아 있어도 사이트는 정상 동작하지만 나중에 헷갈립니다.)
-> 나머지 파일은 같은 이름으로 덮어쓰면 됩니다.
+시안 D 는 GitHub Pages 설정이 이미 끝나 있습니다(저장소 `idagyeol-bit/shinjeong-site-sian-d`, `main` 갈래 / `/ (root)`).
 
-1. 이 폴더 안의 **내용물 전체**를 저장소 최상단에 올립니다.
-   `shinjeong-site` 폴더째로 올리면 주소가 `.../shinjeong-site-a/shinjeong-site/` 가 되어 버립니다.
-   `index.html` 이 저장소 맨 위에 보여야 맞습니다.
-2. 저장소 설정 → Pages → Source 를 `main` 브랜치 / `/ (root)` 로 지정합니다.
-3. `.nojekyll` 파일이 함께 올라가야 합니다(이미 들어 있습니다).
-4. 주소가 정해지면 아래 두 가지를 바꿔 주세요.
-   - `tools/build.js` 의 맨 위 `SITE_URL`
-   - `robots.txt` 의 Sitemap 주소
-
-`README.md`, `serve.ps1`, `tools/` 는 올리지 않아도 사이트는 정상 동작합니다.
+1. 고친 뒤 다시 만듭니다. 이 노트북은 `node` 가 PATH 에 없어 아래 경로로 실행합니다.
+   ```
+   "/c/Users/user/AppData/Local/Programs/nodejs-portable/node-v24.22.0-win-x64/node.exe" tools/build.js
+   "/c/Users/user/AppData/Local/Programs/nodejs-portable/node-v24.22.0-win-x64/node.exe" tools/build-en-lite.js
+   ```
+2. 미리보기(위 1번)로 확인합니다.
+3. 올립니다: `git add -A` → `git commit -m "시안D N차: …"` → `git push origin main`
+   1~2분 뒤 https://idagyeol-bit.github.io/shinjeong-site-sian-d/ 에 반영됩니다. `dev` 갈래가 없으므로 올리면 바로 공개됩니다.
+4. `.nojekyll` 파일이 함께 올라가야 합니다(이미 들어 있습니다).
+5. 정식 도메인이 정해지면 `tools/site.config.js` 의 `sian.url`(지금 시안 D 주소)과 `tools/build.js` 맨 위 `SITE_URL` 을 함께 확인합니다.
 
 ---
 
