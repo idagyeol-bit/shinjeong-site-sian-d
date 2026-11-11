@@ -3,6 +3,8 @@
 > **이 폴더·저장소는 시안 D다.** 시안 C 58차(6df83a8)를 복사해 시작한 독립 판이며, 시안 C·B·원본과 git 기록·원격·파일을 공유하지 않는다. 올리기는 `git push origin main`만.
 > - 폴더 `…신정개발-홈페이지-새디자인_1\시안D` · 갈래 `main` · 저장소 `idagyeol-bit/shinjeong-site-sian-d`(원격 `origin` 하나) · 주소 https://idagyeol-bit.github.io/shinjeong-site-sian-d/ (시작 2026-11-11, 이다결 님 요청)
 > - 아래 기록은 시안 C 에서 가져온 그대로다. 아래에 나오는 갈래(`dev`·`sian-*`)·원격(`sianc` 등)·다른 폴더 이야기는 이 폴더에 해당하지 않는다. 시안 C 규칙(시안 B 예외·시안C N차)은 시안 D 에도 그대로 적용된다.
+> - **시안 D 작업 순서:** ① `git branch --show-current` = `main`, `git remote -v` = `origin`(shinjeong-site-sian-d) 하나인지 확인(아니면 멈추고 알린다) ② 고친다(사실은 `tools/build.js`, 모양은 `tools/site.config.js`·`css/site.css`) ③ 재생성 두 줄 ④ 미리보기 `serve.ps1` → http://localhost:4173/ ⑤ 이다결 님이 올리라고 하면 `git add` → `git commit` → `git push origin main`(1~2분 뒤 공개 주소에 반영. `dev` 갈래가 없으므로 올리면 바로 공개된다).
+> - **node 경로:** 이 컴퓨터는 `node` 가 PATH 에 없다. 재생성은 `"/c/Users/user/AppData/Local/Programs/nodejs-portable/node-v24.22.0-win-x64/node.exe" tools/build.js` → 같은 node 로 `tools/build-en-lite.js`(이 판의 영문은 축약 3쪽, `build-en.js` 는 쓰지 않는다).
 
 이 폴더는 (주)신정개발 홈페이지(정적 사이트)의 원본입니다. 배포 주소: https://idagyeol-bit.github.io/shinjeong-site-b/
 
