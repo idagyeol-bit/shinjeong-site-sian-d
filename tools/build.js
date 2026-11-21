@@ -442,14 +442,52 @@ const CREDS = {
   certs: ['ISO 9001:2015 (품질경영)', 'ISO 14001:2015 (환경경영)', 'KOSHA-MS 안전보건경영시스템 인증', '위험성평가 인정 (산업안전보건공단)', '기업부설연구소 인정', '벤처기업 확인', 'INNOBIZ 기술혁신형 중소기업', 'MAINBIZ 경영혁신형 중소기업', '전남형 강소기업', '신용등급 우수기업 인증 (2023)', '지역사회 공헌 인정기업 (2020)'],
   awards: ['환경부장관상 (2007)', '서비스분야 안전보건활동 우수사례 대상 (2018)', '중소기업 경영혁신 공모전 우수상 (2020)', '산업통상자원부 표창 (2021)'],
   patentCount: '등록 8건 · 출원 4건',   // 31차: 회사소개서(2024) p.28~29 특허증 8장, p.30 출원사실증명 4장. 대표 특허 다섯 건은 PROCESS.patents
-  teams: ['경영지원팀', '안전 · 공무', '기업부설연구소', 'C&M 1팀 · 2팀', 'C&S 1팀 · 2팀', 'SAP팀'],
+  teams: ['경영지원팀', '안전보건팀', '기업부설연구소', 'SAP팀', '플랜트솔루션1팀', '플랜트솔루션2팀', '플랜트솔루션3팀', '로보틱스기술팀'],   // 시안D 1차(2026-11-22): 회사 제공 조직도(회사조직도.png) 그대로 — 앞 셋 = 본부장 아래 줄, 뒤 다섯 = 기술팀 아래 줄
   quals: ['산업안전기사 · 산업안전산업기사 · 위험물산업기사', '토목기사 · 토목 중급/초급기술자 · 기계 중급기술자', '가스시설시공관리자 · 난방시공업 인정기능사', '용접기능사 · 특수용접기능사 · 설비보전기능사', '화학분석기능사 · 건설재료시험기능사 · 전기기능사', '굴삭기운전기능사 · 지게차운전기능사 · 건설기계조종사'],
   qualFields: ['안전·위험물', '토목·기계', '가스·난방', '용접·설비보전', '분석·시험·전기', '건설기계 운전']   // 31차: quals 줄마다 붙이는 분야 이름(원본에 없는 이름 — 31차 F2)
 };
 
-/* 조직도 (31차) — 회사소개서(2024) p.7의 부서만 싣는다(이름·직책은 싣지 않음). CREDS.teams의 'C&M 1팀 · 2팀'을 두 칸으로 나눈다 */
-const ORG_ROWS = [CREDS.teams.slice(0, 3), CREDS.teams.slice(3).flatMap((t) => { const m = t.match(/^(.+) 1팀 · 2팀$/); return m ? [`${m[1]} 1팀`, `${m[1]} 2팀`] : [t]; })];
-const ORG_LABEL = `조직도: 대표이사 아래에 ${ORG_ROWS[0].map((t) => t.replace(/ · /g, '·')).join(', ')}가 있고, 그 아래에 ${ORG_ROWS[1].join(', ')}이 있습니다.`;
+/* 조직도 — 시안D 1차(2026-11-22 이다결 님 결정): 회사가 준 조직도(07_새자료_2026-11-22/회사조직도.png)의 칸 이름만 싣는다(사람 이름 · 인원수는 싣지 않음).
+   차례: 대표이사 → 본부장 → [경영지원팀 · 안전보건팀 · 기업부설연구소] → 기술팀 → [SAP팀 · 플랜트솔루션1~3팀 · 로보틱스기술팀].
+   기술팀은 그림에서 안전보건팀 바로 밑 가운데 줄에 있다 — '본부장 아래'로 읽었다(이다결 님 결정 ①ⓐ). 예전(31차)은 회사소개서(2024) 7쪽 조직도였다 */
+const ORG_HEAD = '본부장', ORG_MID = '기술팀';
+const ORG_ROWS = [CREDS.teams.slice(0, 3), CREDS.teams.slice(3)];
+const ORG_LABEL = `조직도: 대표이사 아래에 ${ORG_HEAD}이 있고, ${ORG_HEAD} 아래에 ${ORG_ROWS[0].join(', ')}, ${ORG_MID}이 있습니다. ${ORG_MID} 아래에 ${ORG_ROWS[1].join(', ')}이 있습니다.`;
+
+/* 안전 · 보건 — 시안D 1차(2026-11-22 이다결 님 결정): 회사 제공 문서 두 개(07_새자료_2026-11-22)의 문장을 한 글자도 바꾸지 않고 싣는다(요약 · 고쳐 쓰기 금지, CLAUDE.md 절대 규칙 1 예외).
+   policy = 안전환경보건경영방침.docx — 문서의 날짜 칸('2025년 □월 □일')이 비어 있어 날짜는 쓰지 않는다. decl = 안전선언문.docx — 2026년 01월 01일.
+   두 문서의 서명 이름은 쓰지 않는다(절대 규칙 4). 항목 앞 번호는 붙이지 않는다(문서에 없음, 결정 ③ⓐ) */
+const SAFETY = {
+  policy: {
+    title: '안전환경보건 경영방침', en: 'Safety, Health and Environment Management Policy',
+    intro: '㈜신정개발은 사람이 경영의 중심이며 가장 큰 자산임을 믿습니다. 안전환경보건은 단순한 법적 의무가 아닌 지속가능한 성장의 토대이자 경쟁력의 원천입니다. 우리는 안전환경보건을 경영의 새로운 가치 기준으로 삼아 다음과 같이 실천합니다.',
+    items: [
+      ['사람이 먼저다', '생명과 건강이 모든 경영 의사결정의 출발점', '우리는 생산성, 납기, 수익성보다 사람의 생명과 건강을 최우선으로 합니다. 안전하지 않으면 시작하지 않으며, 위험이 발견되면 작업을 멈출 권리와 책임을 모든 임직원에게 부여합니다. 사람을 지키는 것이 곧 기업을 지키는 길입니다.'],
+      ['안전은 비용이 아닌 투자', '예방적 안전관리로 리스크를 기회로', '사고는 기업의 생존을 위협하고, 신뢰를 무너뜨립니다. 우리는 사고 예방에 적극 투자하여 불확실성을 제거하고, 중대재해 제로를 달성함으로써 고객과 사회로부터 신뢰받는 기업으로 성장합니다. 안전한 현장은 품질과 생산성을 동시에 높입니다.'],
+      ['기술혁신으로 본질적 안전 확보', '사람을 위험에서 멀어지게', '위험한 작업에 사람을 보내지 않습니다. 우리는 로봇 기술과 자동화 솔루션을 지속적으로 개발하여 근로자를 위험 작업에서 해방시키고, 이를 통해 안전성과 작업 효율을 동시에 향상시킵니다. 기술혁신은 안전의 미래입니다.'],
+      ['안전문화가 조직문화다', '자율과 책임의 안전 생태계 조성', '안전은 경영진만의 책임이 아니라 모든 구성원의 일상입니다. 우리는 지속적인 교육과 소통을 통해 안전을 자율적으로 실천하는 문화를 만들고, 안전 제안과 개선을 격려하며, 서로의 안전을 지키는 신뢰와 협력의 조직을 만들어갑니다.'],
+      ['환경과 건강은 미래 경쟁력', '지속가능한 성장의 조건', '환경을 보호하고 근로자의 건강을 증진하는 것은 사회적 책임이자 기업의 지속가능성을 보장하는 길입니다. 우리는 친환경 작업 방식을 도입하고, 작업환경을 개선하며, 근로자의 건강을 체계적으로 관리하여 함께 성장하는 기업을 만듭니다.'],
+      ['함께 안전하면 함께 성장한다', '협력업체와 상생 안전 실현', '협력업체 근로자도 우리의 소중한 동료입니다. 우리는 적정한 계약 조건을 보장하고, 안전 정보와 자원을 공유하며, 함께 안전한 작업 환경을 만들어갑니다. 파트너의 안전이 곧 우리의 안전이며, 함께 안전할 때 함께 성장합니다.'],
+      ['측정하고 개선한다', '안전경영의 지속적 진화', '우리는 안전 목표를 수립하고, 이행 상태를 정기적으로 점검하며, 데이터 기반으로 개선합니다. 아차사고와 작은 개선 제안도 소중히 여기며, 지속적인 학습과 혁신을 통해 안전환경보건 경영을 끊임없이 발전시킵니다.']
+    ],
+    close: [['안전환경보건은 우리 경영의 중심 가치이자 ', '지속가능한 성장을 위한 전략적 선택입니다.'], ['사람을 먼저 생각하는 기업, 안전으로 신뢰받는 기업,', '미래를 책임지는 기업 신정개발이 되겠습니다.']],
+    sign: '㈜신정개발 대표이사'
+  },
+  decl: {
+    title: '안전선언문', en: 'Safety Declaration',
+    intro: '㈜신정개발은 모든 임직원의 생명과 건강이 기업 경영의 최우선 가치임을 선언하며, 안전한 작업환경 조성과 무재해 사업장 달성을 위해 다음과 같이 다짐합니다.',
+    items: [
+      ['하나,', '안전은 선택이 아닌 필수입니다. 우리는 어떠한 상황에서도 안전을 최우선으로 하며, 안전하지 않으면 작업을 시작하지 않습니다.'],
+      ['둘,', '모든 작업은 정해진 안전수칙을 준수하며, 위험 요인을 발견하면 즉시 작업을 중단하고 보고합니다.'],
+      ['셋,', '동료의 안전은 나의 책임입니다. 우리는 서로의 안전을 지키며, 위험한 상황을 방관하지 않습니다.'],
+      ['넷,', '안전교육과 훈련에 성실히 참여하며, 안전장비를 올바르게 착용하고 사용합니다.'],
+      ['다섯,', '편의나 신속함보다 안전을 우선하며, 무재해는 목표가 아닌 우리의 일상입니다.']
+    ],
+    close: '우리는 "오늘도 모두가 안전하게 집으로 돌아간다"는 약속을 반드시 지킬 것을 엄숙히 선언합니다.',
+    date: '2026.01.01', sign: ['㈜신정개발 대표이사', '전 임직원 일동']
+  },
+  src: '회사 제공 문서(2026-11) — 안전환경보건 경영방침 · 안전선언문'
+};
 
 /* ===================== 보유 장비 — 업무별 표 (23차) =====================
    장비명·규격·용도는 회사소개서(2024) p.21~24 장비표 그대로(2026-10-03 대조). 규격 '—'은 원본에 없거나 단위 확인 전.
@@ -1530,7 +1568,7 @@ function footer(o) {   // 시안C 18차: o.noAsk — 본문 끝에 문의 띠가
     { h: nv('services') || '사업분야', href: 'services.html', items: SERVICES.map((s) => ({ href: s.file, label: s.title })) },
     { h: '무인 솔루션', href: 'unmanned.html', items: [{ href: 'unmanned.html#robots', label: '로봇 라인업' }, { href: 'unmanned.html#method', label: '작업 방식' }, { href: 'unmanned.html#rnd', label: '연구개발 · 특허' }] },
     { h: '적용 사례', href: 'cases.html', items: [{ href: 'cases.html', label: '분야별 적용 사례' }, { href: 'projects.html', label: '수행 이력' }] },
-    { h: '회사 소개', href: 'company.html', items: [{ href: 'company.html#greeting', label: '인사말' }, { href: 'company.html#history', label: '연혁 · 사업' }, { href: 'company.html#credentials', label: '인증 · 특허' }, { href: 'company.html#organization', label: '조직 · 장비' }, { href: 'company.html#location', label: '오시는 길' }] },
+    { h: '회사 소개', href: 'company.html', items: [{ href: 'company.html#greeting', label: '인사말' }, { href: 'company.html#history', label: '연혁 · 사업' }, { href: 'company.html#credentials', label: '인증 · 특허' }, { href: 'company.html#safety', label: '안전 · 보건' }, { href: 'company.html#organization', label: '조직 · 장비' }, { href: 'company.html#location', label: '오시는 길' }] },
     { h: '고객 지원', href: 'contact.html', items: [{ href: 'contact.html', label: '현장 문의' }, ...(CFG.nav.some((n) => n.key === 'news') ? [{ href: 'news.html', label: '소식' }] : []), { href: `mailto:${C.email}`, label: '이메일 문의' }] }
   ];
   const tel = C.tel.replace(/-/g, '');
@@ -2916,7 +2954,7 @@ function heroFlow() {
   const A = 'assets/hero-flow/';
   const li = FLOW.steps.map((st, i) => `<li${st.robot ? ' class="rbt"' : ''}><i class="bar"></i><button type="button" class="sb" aria-expanded="false"><span class="ph">${st.robot ? `<span class="rbadge">${t(st.robot)}</span>` : ''}<img src="${A}${st.vd.replace('v', 'p')}.webp" alt="" class="po" width="1600" height="944" decoding="async"${i ? ' loading="eager"' : ' fetchpriority="high"'}><video class="vd" muted playsinline preload="${i ? 'none' : 'auto'}" src="${A}${st.vd}.mp4"></video><span class="pins" data-v="${st.vd}" aria-hidden="true">${(st.pins || []).map((q) => `<span class="pin" data-id="${q[0]}" data-side="${q[3]}" data-dy="${q[4]}"${q[6] ? ` data-dx="${q[6]}"` : ''}${q[5] ? ' data-m="1"' : ''}><i class="pd"></i><i class="pk"></i><b>${esc(q[1])}${q[2] ? `<small>${esc(q[2])}</small>` : ''}</b></span>`).join('')}</span></span><span class="tx"><em>${String(i + 1).padStart(2, '0')}</em><b>${t(st.title)}</b><span class="tg">${t(st.tag)}</span><span class="ds">${b(st.desc)}</span><span class="ef">${t(st.eff)}</span></span><i class="cv" aria-hidden="true">+</i></button></li>`).join('');
   return `  <!-- ===== 히어로: 표어 + 일하는 순서 다섯 칸 (큰 틀 'flow', 시안C 27차) ===== -->
-<section class="hx" id="hx" aria-label="${esc(C.brand)} 소개"><svg class="hxsky" viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 259.5H1440"/><path d="M60 259V170h120v89M60 170q60-22 120 0M70 200h100M70 230h100"/><path d="M200 259V150h150v109M200 150q75-26 150 0M210 185h130M210 220h130"/><path d="M420 259V60h26v199M415 60h36M415 110h36M415 160h36M415 210h36M433 60V30"/><path d="M480 259V95h20v164M476 95h28M476 140h28M476 185h28M490 95V70"/><path d="M540 259V120h52v139M540 160h52M540 200h52M566 120V96"/><path d="M620 259V200h300v59M620 225h300M650 200v59M710 200v59M770 200v59M830 200v59M890 200v59"/><path d="M955 259V40h10v219M960 40V20M950 30h20"/><path d="M1000 259V178h170v81M1000 178q85-26 170 0M1012 212h146M1012 240h146"/><path d="M1190 259V140h40v119M1184 140h52M1184 180h52M1184 220h52"/><path d="M1260 259V190h150v69M1260 190q75-20 150 0M1272 225h126"/><path d="M180 240h20M350 240h70M446 240h34M592 240h28M920 240h35M965 240h35M1170 240h20M1230 240h30" stroke-dasharray="3 4"/></g></svg><div class="wrap"><div class="hxh"><div class="hxl"><p class="eb" id="hxe">${t(f.eyebrow)}</p><h1 id="hxt" class="qt">${f.title.map((x, i) => `<span class="${i ? 'q2' : 'q1'}">${i ? '' : '<i class="qo" aria-hidden="true">“</i>'}${b(x)}${i === f.title.length - 1 ? '<i class="qc" aria-hidden="true">”</i>' : ''}</span>`).join('')}</h1>${f.gain ? `<p class="hxg">${b(f.gain)}</p>` : ''}</div>
+<section class="hx" id="hx" aria-label="${esc(C.brand)} 소개"><svg class="hxsky" viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 259.5H1440"/><path d="M60 259V170h120v89M60 170q60-22 120 0M70 200h100M70 230h100"/><path d="M200 259V150h150v109M200 150q75-26 150 0M210 185h130M210 220h130"/><path d="M420 259V60h26v199M415 60h36M415 110h36M415 160h36M415 210h36M433 60V30"/><path d="M480 259V95h20v164M476 95h28M476 140h28M476 185h28M490 95V70"/><path d="M540 259V120h52v139M540 160h52M540 200h52M566 120V96"/><path d="M620 259V200h300v59M620 225h300M650 200v59M710 200v59M770 200v59M830 200v59M890 200v59"/><path d="M955 259V40h10v219M960 40V20M950 30h20"/><path d="M1000 259V178h170v81M1000 178q85-26 170 0M1012 212h146M1012 240h146"/><path d="M1190 259V140h40v119M1184 140h52M1184 180h52M1184 220h52"/><path d="M1260 259V190h150v69M1260 190q75-20 150 0M1272 225h126"/><path d="M180 240h20M350 240h70M446 240h34M592 240h28M920 240h35M965 240h35M1170 240h20M1230 240h30" stroke-dasharray="3 4"/></g></svg><div class="wrap"><div class="hxh"><div class="hxl"><p class="eb" id="hxe">${t(f.eyebrow)}</p><h1 id="hxt" class="qt">${f.title.map((x, i) => `<span class="${i ? 'q2' : 'q1'}">${i ? '' : '<i class="qo" aria-hidden="true">“</i>'}${b(x)}${i === f.title.length - 1 ? '<i class="qc" aria-hidden="true">”</i>' : ''}</span>`).join('')}</h1>${f.gain ? `<p class="hxg">${b(f.gain)}</p>` : ''}${f.safety ? `<a class="hxsafe" href="${esc(f.safety.href)}">${t(f.safety.text)} ${arrow(14)}</a>` : ''}</div>
 <div class="hxr2"><p class="lede"><span class="lw">${b(f.lede.pc)}</span><span class="lm">${b(f.lede.m)}</span><span class="lt">${b(f.lede.tail)}</span></p>   <!-- 56차: 휴대폰은 표어 아래 한 줄(gain)과 겹치는 뒷문장을 줄여 다섯 장면이 첫 화면에 보이게 -->
 <ul class="meta">${f.meta.map(([n, u, l]) => `<li><b>${t(n)}${u ? `<small>${t(u)}</small>` : ''}</b>${t(l)}</li>`).join('')}</ul>
 <nav class="hxgo" aria-label="분야 바로 가기"><span class="hxgo__k">분야 바로 가기</span>${SERVICES.map((x) => `<a href="${x.file}">${esc(x.title)}</a>`).join('')}</nav></div></div>   <!-- 시안C 46차: 신정개발을 이미 아는 손님은 첫 화면에서 바로 자기 분야로 -->
@@ -4473,7 +4511,7 @@ pages['company.html'] = () => {
   const cmRows = cm.rows.map(([a, b, c, d]) => `<tr><th scope="row">${esc(a)}</th><td${b === '—' ? ' class="z"' : ''}>${esc(b)}</td><td>${esc(c)}</td><td class="q">${esc(d)}</td></tr>`).join('');
   const NV = 'https://map.naver.com/p/search/', KK = 'https://map.kakao.com/link/search/';
   /* 시안C 34차: 회사 소개 네 화면 [이름, 메뉴 글자, 휴대폰 짧은 글자] — 화면 안 구역: hist = 걸어온 길 · 하는 일 / cred = 인증 · 특허 / org = 사람과 조직 · 보유 장비 / loc = 오시는 길 (js/company17.js 34차) */
-  const C7_VIEWS = [['hist', '연혁 · 사업', '연혁 · 사업'], ['cred', '인증 · 특허', '인증 · 특허'], ['org', '조직 · 장비', '조직 · 장비'], ['loc', '오시는 길', '오시는 길']];
+  const C7_VIEWS = [['hist', '연혁 · 사업', '연혁 · 사업'], ['cred', '인증 · 특허', '인증 · 특허'], ['safe', '안전 · 보건', '안전 · 보건'], ['org', '조직 · 장비', '조직 · 장비'], ['loc', '오시는 길', '오시는 길']];   // 시안D 1차: 안전 · 보건 화면을 인증 · 특허 다음에
   const nav = [['greeting', '인사말', '인사말'], ['history', '걸어온 길', '연혁'], ['overview', '하는 일', '사업'], ['credentials', '인증 · 특허', '인증'], ['organization', '사람과 조직', '조직'], ['equipment', '보유 장비', '장비'], ['location', '오시는 길', '위치']];
   return head({
     file: 'company.html', page: 'company',
@@ -4522,20 +4560,39 @@ pages['company.html'] = () => {
       <div><h3 class="c7-h3">수상 <small>${CREDS.awards.length}회</small></h3><ul class="c7-yr">${aw}</ul></div>
     </div>
   </div></section>
+  <div class="wrap"><a class="um-next c7-next" href="#v-safe"><span><small>다음</small><b>안전 · 보건</b><em>${esc(SAFETY.policy.title)} · ${esc(SAFETY.decl.title)}</em></span>${arrow(28)}</a></div>
+  </div>
+  <div class="c7-view" id="v-safe" data-view="safe">   <!-- 시안D 1차(2026-11-22): 안전 · 보건 — 회사 제공 문서 두 개의 문장 그대로(SAFETY) -->
+  <section class="c7-sec c7-sec--full c7-sf" id="safety" aria-labelledby="sf-h"><div class="wrap">
+    <div class="c7-fh"><div>${kick('안전 · 보건')}<h2 class="c7-h2" id="sf-h">${esc(SAFETY.policy.title)}</h2><p class="c7-sf__en" lang="en">${esc(SAFETY.policy.en)}</p></div><p class="c7-lead">${esc(SAFETY.policy.intro)}</p></div>
+    <ul class="c7-sf__pol">${SAFETY.policy.items.map(([h, s, d]) => `<li><h3>${esc(h)}</h3><p class="c7-sf__sub">${esc(s)}</p><p>${esc(d)}</p></li>`).join('')}</ul>
+    <div class="c7-sf__close">${SAFETY.policy.close.map(([a, b]) => `<p>${esc(a)}<b>${esc(b)}</b></p>`).join('')}</div>
+    <p class="c7-sf__sign">${esc(SAFETY.policy.sign)}</p>
+  </div></section>
+  <section class="c7-sf-dc" id="safety-declaration" aria-labelledby="sd-h"><div class="wrap">
+    <p class="c7-k">안전 · 보건</p><h2 class="c7-h2" id="sd-h">${esc(SAFETY.decl.title)}</h2><p class="c7-sf__en" lang="en">${esc(SAFETY.decl.en)}</p>
+    <p class="c7-sf-dc__in">${esc(SAFETY.decl.intro)}</p>
+    <ol class="c7-sf-dc__ls">${SAFETY.decl.items.map(([n, d]) => `<li><b>${esc(n)}</b><span>${esc(d)}</span></li>`).join('')}</ol>
+    <p class="c7-sf-dc__cl">${esc(SAFETY.decl.close)}</p>
+    <p class="c7-sf-dc__sg"><span>${esc(SAFETY.decl.date)}</span>${SAFETY.decl.sign.map((x) => `<span>${esc(x)}</span>`).join('')}</p>
+    <p class="us-src">${esc(SAFETY.src)}</p>
+  </div></section>
   <div class="wrap"><a class="um-next c7-next" href="#v-org"><span><small>다음</small><b>조직 · 장비</b><em>조직도 · 보유 기술자격 · 분야별 보유 장비</em></span>${arrow(28)}</a></div>
   </div>
   <div class="c7-view" id="v-org" data-view="org">
 ` + split('organization', '사람과 조직', 'l', fig(K.photos.org, '(max-width:860px) 100vw, 90vw'), `${kick('사람과 조직')}<h2 class="c7-h2">조직과 기술 인력</h2>
-      <p class="c7-lead">대표이사 아래 경영지원팀 · 안전 · 공무 · 기업부설연구소와 C&amp;M · C&amp;S · SAP 다섯 개 팀이 있습니다.</p>
-      <div class="c7-oc" role="img" aria-label="${esc(ORG_LABEL)}">
+      <p class="c7-lead">대표이사와 ${ORG_HEAD} 아래 ${ORG_ROWS[0].join(' · ')} · ${ORG_MID}이 있고, ${ORG_MID} 아래 ${ORG_ROWS[1].join(' · ')}이 있습니다.</p>   <!-- 시안D 1차: 회사 제공 조직도(2026-11) -->
+      <div class="c7-oc c7-oc--d" role="img" aria-label="${esc(ORG_LABEL)}">
         <div class="c7-oc__ceo">대표이사</div>
+        <div class="c7-oc__hq">${ORG_HEAD}</div>
         <div class="c7-oc__r1">${ORG_ROWS[0].map((t) => /연구소/.test(t) ? `<div class="c7-oc__b c7-oc__b--lab"><span class="c7-oc__ic">${ic(BOT, 18)}</span>${esc(t)}<small>2017년 설립</small></div>` : `<div class="c7-oc__b">${esc(t)}</div>`).join('')}</div>
+        <div class="c7-oc__mid">${ORG_MID}</div>
         <div class="c7-oc__r2">${ORG_ROWS[1].map((t) => `<div class="c7-oc__t">${esc(t)}</div>`).join('')}</div>
       </div>
       <a class="c7-lab" href="unmanned.html#rnd"><span class="c7-lab__k">기업부설연구소</span><span class="c7-lab__t"><b>연구개발 과제 · 등록 특허 · 로봇 세대는<br>무인 솔루션 페이지에 모아 두었습니다</b><small>2017년 11월 설립 · 한국산업기술진흥협회 인정 · 벤처기업 확인유형 ‘연구개발유형’</small></span>${arrow(16)}</a>
       <h3 class="c7-h3">보유 기술자격 <small>${CREDS.qualFields.length}개 분야</small></h3>
       <ul class="c7-q">${CREDS.quals.map((q, i) => `<li><b>${esc(CREDS.qualFields[i])}</b><span>${esc(q)}</span></li>`).join('')}</ul>
-      <p class="us-src">회사소개서(2024) 7쪽 조직도 · 18쪽 기술자격 · 27쪽 인정서 · 확인서</p>`, false) + split('equipment', '보유 장비', 'r', fig(K.photos.equipment), `${kick('보유 장비')}<h2 class="c7-h2">분야마다 쓰는 장비를<br>갖추고 있습니다</h2>
+      <p class="us-src">회사 제공 조직도(2026-11) · 회사소개서(2024) 18쪽 기술자격 · 27쪽 인정서 · 확인서</p>`, false) + split('equipment', '보유 장비', 'r', fig(K.photos.equipment), `${kick('보유 장비')}<h2 class="c7-h2">분야마다 쓰는 장비를<br>갖추고 있습니다</h2>
       <p class="c7-lead">분야별 장비의 규격 · 용도 · 보유 대수는 각 분야 페이지에서 보실 수 있습니다.</p>
       <ul class="c7-eq">${eqRows}</ul>
       <h3 class="c7-h3">공통 장비 <small>운반 · 지원</small></h3>

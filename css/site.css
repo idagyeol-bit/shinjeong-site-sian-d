@@ -5771,3 +5771,41 @@ html.ko-user .enC-ko a{display:inline-flex;align-items:center;min-height:36px;pa
 html.ko-user .enC-ko{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:60;width:max-content;max-width:calc(100vw - 24px);padding:8px 8px 8px 18px;border-radius:999px;box-shadow:0 10px 30px rgba(14,46,74,.25);border:1px solid #cfe7cf}
 @media (max-width:860px){html.ko-user .enC-ko{bottom:86px;font-size:13px;padding:6px 6px 6px 14px}html.ko-user .enC-ko a{min-height:40px}}
 @media print{.enC-ko{display:none!important}}
+
+/* ===== 시안D 1차(2026-11-22): 회사 소개 › 조직도(본부장 · 기술팀 칸) + 안전 · 보건 화면 ===== */
+.c7-oc--d .c7-oc__hq, .c7-oc--d .c7-oc__mid { position: relative; margin-top: 22px; padding: 12px 34px; font-weight: 800; font-size: 15px; }
+.c7-oc--d .c7-oc__hq { background: #2c4a6b; color: #fff; }
+.c7-oc--d .c7-oc__hq::before, .c7-oc--d .c7-oc__mid::before { content: ""; position: absolute; left: 50%; bottom: 100%; height: 22px; border-left: 2px solid #9fb0c0; }
+.c7-oc--d .c7-oc__hq::after { content: ""; position: absolute; left: 50%; top: 100%; height: 22px; border-left: 2px solid #9fb0c0; }
+.c7-oc--d .c7-oc__mid { margin-top: 22px; border: 2px solid var(--navy); background: #fff; color: var(--navy); }
+.c7-oc--d .c7-oc__mid::after { content: ""; position: absolute; left: 50%; top: 100%; height: 22px; border-left: 2px solid #9fb0c0; }
+.c7-oc--d .c7-oc__r2 { margin-top: 44px; }
+.c7-oc--d .c7-oc__r2::after { display: none; }
+.c7-sf__en { margin: 6px 0 0; font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--muted); }
+.c7-sf__pol { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); column-gap: 32px; border-top: 1px solid var(--ink); }
+.c7-sf__pol li { padding: 24px 0 26px; border-bottom: 1px solid var(--line); }
+.c7-sf__pol h3 { margin: 0; font-size: 19px; letter-spacing: -.02em; color: var(--ink); }
+.c7-sf__pol .c7-sf__sub { margin: 6px 0 0; font-size: 14px; font-weight: 700; color: var(--brand); }
+.c7-sf__pol p { margin: 10px 0 0; font-size: 15px; line-height: 1.75; color: var(--text); }
+.c7-sf__close { margin: 36px 0 0; padding: 22px 26px; background: #f1f5f9; border-left: 4px solid var(--navy); }
+.c7-sf__close p { margin: 0; font-size: 16.5px; line-height: 1.7; color: var(--ink); } .c7-sf__close p + p { margin-top: 8px; } .c7-sf__close b { font-weight: 800; }
+.c7-sf__sign { margin: 18px 0 0; text-align: right; font-size: 15px; font-weight: 700; color: var(--ink); }
+.c7-sf-dc { padding-block: clamp(64px, 7vw, 104px); background: var(--navy); color: #fff; }
+body .c7-sf-dc .c7-k { color: #9fd0ff !important; } body .c7-sf-dc .c7-h2 { color: #fff !important; } .c7-sf-dc .c7-sf__en { color: #a9bdd0; }
+.c7-sf-dc__in { margin: 22px 0 0; max-width: 60em; font-size: 17px; line-height: 1.8; font-weight: 600; color: #e6edf4; }
+.c7-sf-dc__ls { list-style: none; margin: 34px 0 0; padding: 0; border-top: 1px solid #ffffff33; }
+.c7-sf-dc__ls li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; padding: 20px 0; border-bottom: 1px solid #ffffff33; font-size: 17px; line-height: 1.7; }
+.c7-sf-dc__ls b { color: #9fd0ff; font-weight: 800; }
+.c7-sf-dc__cl { margin: 36px 0 0; font-size: clamp(19px, 2vw, 24px); font-weight: 800; line-height: 1.5; letter-spacing: -.02em; }
+.c7-sf-dc__sg { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; font-size: 15px; color: #c9d6e2; }
+.c7-sf-dc .us-src { color: #9fb0c0; margin-top: 28px; }
+@media (max-width: 820px) {
+  .c7-oc--d .c7-oc__hq, .c7-oc--d .c7-oc__mid { padding: 10px 24px; font-size: 14px; }
+  .c7-sf__pol { grid-template-columns: 1fr; } .c7-sf__pol h3 { font-size: 17px; } .c7-sf__pol p { font-size: 14.5px; }
+  .c7-sf__close p { font-size: 15px; } .c7-sf-dc__in { font-size: 15.5px; }
+  .c7-sf-dc__ls li { grid-template-columns: 56px minmax(0, 1fr); gap: 10px; font-size: 15.5px; }
+}
+/* 메인 첫 화면: 표어 아래 한 줄(gain) 밑의 안전 · 보건 연결 */
+#hx .hxsafe { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 14.5px; font-weight: 700; color: #fff; text-decoration: underline; text-decoration-color: rgba(255,255,255,.45); text-underline-offset: 4px; }
+#hx .hxsafe:hover { text-decoration-color: #fff; }
+@media (max-width: 820px) { #hx .hxsafe { margin-top: 8px; font-size: 13.5px; } }

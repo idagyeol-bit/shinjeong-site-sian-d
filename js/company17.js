@@ -5,7 +5,7 @@
   var lnb = document.querySelector('.c7-lnb'), views = [].slice.call(document.querySelectorAll('.c7-view'));
   if (lnb && views.length) {
     var tabs = [].slice.call(lnb.querySelectorAll('.um-lnb__t a'));
-    var MAP = { 'v-hist': 'hist', history: 'hist', overview: 'hist', greeting: 'hist', 'v-cred': 'cred', credentials: 'cred', 'v-org': 'org', organization: 'org', equipment: 'org', 'v-loc': 'loc', location: 'loc' };
+    var MAP = { 'v-hist': 'hist', history: 'hist', overview: 'hist', greeting: 'hist', 'v-cred': 'cred', credentials: 'cred', 'v-safe': 'safe', safety: 'safe', 'safety-declaration': 'safe', 'v-org': 'org', organization: 'org', equipment: 'org', 'v-loc': 'loc', location: 'loc' };
     var hh = function () { var h = document.querySelector('header'); return h ? Math.max(0, h.getBoundingClientRect().bottom) : 80; };
     var go = function (el, smooth) { if (!el) return; var y = el.getBoundingClientRect().top + pageYOffset - hh() - lnb.offsetHeight + 1; scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' }); };
     var view = function (v) { views.forEach(function (x) { x.hidden = x.dataset.view !== v; }); tabs.forEach(function (a) { if (a.dataset.view === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); }); window.dispatchEvent(new Event('resize')); };
